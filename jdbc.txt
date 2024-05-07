@@ -1,0 +1,183 @@
+package sushant;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.sql.ResultSet;
+
+
+public class student {
+	public void createDatabase() {
+	try {
+		String url="jdbc:mysql://localhost:3306/";
+		//String db="tejas";
+		String userName="root";
+		String password="sushant15";
+		Connection conn=DriverManager.getConnection(url,userName,password);
+		
+		Statement stm=conn.createStatement();
+		
+		String query="create database tejas";
+		stm.execute(query);
+		System.out.println(" Database createdconnected successfully");
+	}
+	catch(Exception e) {
+		System.out.println(e);
+	}
+
+}
+
+	public void createTable() {
+		try {
+			String url="jdbc:mysql://localhost:3306/tejas";
+			//String db="tejas";
+			String userName="root";
+			String password="sushant15";
+			Connection conn=DriverManager.getConnection(url,userName,password);
+			
+			Statement stm=conn.createStatement();
+			
+			String query="create table college(sid int(3) ,sname varchar(200) ,semail varchar(200) )";
+			stm.execute(query);
+			System.out.println(" Table createdconnected successfully");
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
+		
+	}
+
+	public void createData() {
+		try {
+			String url="jdbc:mysql://localhost:3306/tejas";
+			//String db="tejas";
+			String userName="root";
+			String password="sushant15";
+			Connection conn=DriverManager.getConnection(url,userName,password);
+			String query="INSERT into college (sid ,sname ,semail) VALUES (?,?,?) ";
+			PreparedStatement pstm=conn.prepareStatement(query);
+			pstm.setInt(1, 12);
+			pstm.setString(2,"tejas");
+			pstm.setString(3,"tejas@gmail.com");
+			
+			
+		
+			pstm.executeUpdate();
+			System.out.println(" Data inserted successfully");
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
+		
+	}
+
+	public void readData() {
+		try {
+			String url="jdbc:mysql://localhost:3306/tejas";
+			//String db="tejas";
+			String userName="root";
+			String password="sushant15";
+			Connection conn=DriverManager.getConnection(url,userName,password);
+			String query="select * from college ";
+			Statement stm=conn.createStatement();
+//			pstm.setInt(1, 12);
+//			pstm.setString(2,"tejas");
+//			pstm.setString(3,"tejas@gmail.com");
+			
+			
+		
+			stm.execute(query);
+			ResultSet rs=stm.executeQuery(query);
+			
+			while(rs.next()) {
+				System.out.println("id="+rs.getInt(1));
+				System.out.println("sname="+rs.getString(2));
+				System.out.println("semail="+rs.getString(3));
+			}
+			System.out.println(" read data  successfully");
+			
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
+		
+	}
+	public void updateData() {
+		try {
+			String url="jdbc:mysql://localhost:3306/sushant1";
+			String db="sushant1";
+			String userName="root";
+			String password="sushant15";
+			Connection conn=DriverManager.getConnection(url,userName,password);
+			
+			String query=" UPDATE student set sid=? Where sname =?  ";
+			PreparedStatement pstm=conn.prepareStatement(query);
+			pstm.setInt(1, 15);
+			pstm.setString(2,"shivam");
+			
+			
+			
+			pstm.execute();
+			System.out.println(" Data updated Successfully =");
+			conn.close();
+			
+		}
+		catch(Exception e) {
+			System.out.println(e);
+			
+		}
+		
+		
+	}
+
+	public void deleteData() {
+		try {
+			String url="jdbc:mysql://localhost:3306/sushant1";
+			String db="sushant1";
+			String userName="root";
+			String password="sushant15";
+			Connection conn=DriverManager.getConnection(url,userName,password);
+			
+			String query=" delete from student where sid=?  ";
+			PreparedStatement pstm=conn.prepareStatement(query);
+			pstm.setInt(1, 15);
+			//pstm.setString(2,"shivam");
+			
+			
+			
+			pstm.execute();
+			System.out.println(" Data dELETED Successfully =");
+			conn.close();
+			
+		}
+		catch(Exception e) {
+			System.out.println(e);
+			
+		}
+		
+	}
+
+	
+}
+
+package sushant;
+
+
+
+public class jdbcDemo {
+
+	public static void main(String[] args) {
+		 student st=new student();
+		// st.createdatabase();
+		// st.createTable();
+		// st.createData();
+		// st.readData();
+		// st.updateData();
+		 st.deleteData();
+
+	}
+
+}
+
+

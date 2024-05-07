@@ -1,0 +1,80 @@
+package sushant;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+public interface PalindromeInterface extends Remote
+{
+	public String PalindromeCheck(String s) throws RemoteException;
+}
+
+
+
+
+package sushant;
+import java.rmi.*; 
+import java.rmi.server.*; 
+
+
+public class PalindromeClass extends UnicastRemoteObject implements Remote, 
+PalindromeInterface{
+	
+	 PalindromeClass() throws RemoteException{ 
+		   super(); 
+		  } 
+	 
+	 public String PalindromeCheck(String s) {
+		 String rev="";
+		 for (int i = s.length()-1; i>=0; i--) { 
+			    rev += s.charAt(i); 
+			   } 
+		 if (s.equals(rev)) { 
+			    String k = "The word " + s + " is a palindrome !"; 
+			    return k; 
+			   } 
+			   else { 
+			    String k = "The word " + s + " is not a palindrome !"; 
+			    return k; 
+	 }
+}
+}
+
+
+
+
+
+package sushant;
+import java.rmi.*;
+import java.rmi.registry.LocateRegistry; 
+import java.rmi.registry.Registry; 
+
+public class PalindromeServer {
+	public static void main(String[] args) throws Exception {
+		 Registry reg = LocateRegistry.createRegistry(5000); 
+		   
+		  PalindromeInterface obj = new PalindromeClass(); 
+		  reg.bind("XYZ", obj); 
+		  System.out.println("Server is running.. "); 
+}
+}
+
+
+
+package sushant;
+
+import java.rmi.*; 
+import java.rmi.registry.*; 
+public class PalindromeClient { 
+ 
+public static void main(String[] args) throws Exception{   
+PalindromeInterface obj1 = (PalindromeInterface)Naming.lookup("rmi://localhost:5000/XYZ"); 
+  String ans1 = obj1.PalindromeCheck("HELLO"); 
+  String ans2 = obj1.PalindromeCheck("RACECAR"); 
+  String ans3 = obj1.PalindromeCheck("MADAM"); 
+  String ans4 = obj1.PalindromeCheck("NAYAN"); 
+  System.out.println(ans1); 
+  System.out.println(ans2); 
+  System.out.println(ans3); 
+  System.out.println(ans4); 
+ } 
+ 
+} 
